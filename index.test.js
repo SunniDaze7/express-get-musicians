@@ -9,11 +9,15 @@ const { Musician } = require('./models/index')
 const app = require('./src/app');
 const seedMusician = require("./seedData");
 
-
 describe('./musicians endpoint', () => {
     // Write your tests here
     
-    
+    test("Testing musicians endpoint", async () => {
+        // Sends request to `/bakedGoods` endpoint
+        const response = await request(app).get("/musicians");
+        // const responseData = JSON.parse(response.text);
+        expect(response.statusCode).toBe(200)
+    })
 
 
 
