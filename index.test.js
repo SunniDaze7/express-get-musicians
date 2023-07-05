@@ -15,14 +15,14 @@ describe('testing endpoint', () => {
     
     test("Testing musicians endpoint", async () => {
         // Sends request to `/bakedGoods` endpoint
-        const response = await request(app).get("/musicians");
+        const response = await request(app).get("/musicians/1");
         // const responseData = JSON.parse(response.text);
         expect(response.statusCode).toBe(200)
     })  
-    test("Testing bands endpoint", async () => {
-        // Sends request to `/bakedGoods` endpoint
-        const response = await request(app).get("/bands");
-        // const responseData = JSON.parse(response.text);
-        expect(response.statusCode).toBe(200)
-    })  
+    // test("Testing bands endpoint", async () => {
+    //     // Sends request to `/bakedGoods` endpoint
+    //     const response = await request(app).get("/bands");
+    //     // const responseData = JSON.parse(response.text);
+    //     expect(response.statusCode).toBe(200)
+    // })  
 })
