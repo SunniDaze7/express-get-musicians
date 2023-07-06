@@ -6,19 +6,62 @@ const { db } = require("../db/connection")
 
 const port = 3000;
 
-//TODO: Create a GET /musicians route to return all musicians 
+//to parse requested body objects
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
+//musician routes
+// app.get('/musicians', async (req,res)=>{
+//     const data = await Musician.findAll()
+//     res.json(data)
+// })
+
 app.get('/musicians/:id', async (req,res)=>{
     let id = req.params.id
     const data = await Musician.findByPk(id)
     res.json(data)
 })
 
-// app.get('musicians/1', async (req,res)=>{
-//     for(let i = 0;i < Musician.findAll().length; i++){
-//         const data = await Musician.findByPk(i)
-//         res.json(data)
-//     }
-// })
+app.post('/musicians', async (req,res,next)=>{
+    try{
+    const musician = await Musician.create(req.body)
+    res.json(musician)
+    }catch(error){
+        next(error)
+    }
+})
+
+app.put('/musicians/:id', async(req,res, next)=>{
+    try{
+        let id = req.params.id
+        const musician = await Musician.findByPk(id)
+        if(musician){
+            musician = req.body()
+            await musician.save()
+            res.json(musician)
+        } else{
+            throw new Error('Musician not found')
+        }
+    } catch(error){
+        next(error)
+    }
+})
+
+app.delete('/musicians/:id', async(req,res)=>{
+    try{
+        let id = req.params.id
+        const musician = await Musician.findByPk(id)
+        if(musician){
+            await musician.destroy()
+            await musician.save()
+            res.json(musician)
+        } else{
+            throw new Error('Musician not found')
+        }
+    }catch(error){
+        next(error)
+    }
+})
 
 // app.get('/bands', async(req,res)=>{
 //     const data = await Band.findAll()
